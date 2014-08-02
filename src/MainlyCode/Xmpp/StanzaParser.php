@@ -7,7 +7,7 @@ use RuntimeException;
 class StanzaParser
 {
     /**
-     * @param string $data
+     * @param  string           $data
      * @return SimpleXMLElement
      * @throws RuntimeException
      */

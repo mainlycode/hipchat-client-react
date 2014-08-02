@@ -15,8 +15,8 @@ use RuntimeException;
 class Client extends EventEmitter
 {
     protected $loop;
-    private   $readStream;
-    private   $writeStream;
+    private $readStream;
+    private $writeStream;
 
     /**
      * @param LoopInterface $loop
@@ -78,7 +78,7 @@ class Client extends EventEmitter
     }
 
     /**
-     * @param Connection $connection
+     * @param  Connection       $connection
      * @return resource
      * @throws RuntimeException
      */
@@ -105,7 +105,7 @@ class Client extends EventEmitter
     }
 
     /**
-     * @param resource $socket
+     * @param  resource $socket
      * @return boolean
      */
     protected function encryptSocket($socket)
@@ -118,7 +118,7 @@ class Client extends EventEmitter
     }
 
     /**
-     * @param resource $socket
+     * @param  resource     $socket
      * @return SecureStream
      */
     protected function createStream($socket)
@@ -127,51 +127,55 @@ class Client extends EventEmitter
     }
 
     /**
-     * @param WriteStream $write
-     * @param Connection $connection
-     * @param string $event
+     * @param  WriteStream $write
+     * @param  Connection  $connection
+     * @param  string      $event
      * @return callable
      */
     protected function getReadCallback($write, $connection, $event)
     {
         $client = $this;
-        return function($message) use ($client, $write, $connection, $event) {
+
+        return function ($message) use ($client, $write, $connection, $event) {
             $client->emit($event, array($message, $write, $connection));
         };
     }
 
     /**
-     * @param Connection $connection
+     * @param  Connection $connection
      * @return callable
      */
     protected function getWriteCallback($connection)
     {
         $client = $this;
-        return function($message) use ($client, $connection) {
+
+        return function ($message) use ($client, $connection) {
             $client->emit('xmpp.sent', array($message, $connection));
         };
     }
 
     /**
-     * @param Connection $connection
+     * @param  Connection $connection
      * @return callable
      */
     protected function getErrorCallback($connection)
     {
         $client = $this;
-        return function($message) use ($client, $connection) {
+
+        return function ($message) use ($client, $connection) {
             $client->emit('connect.error', array($message, $connection));
         };
     }
 
     /**
-     * @param Connection $connection
+     * @param  Connection $connection
      * @return callable
      */
     protected function getEndCallback($connection)
     {
         $client = $this;
-        return function() use ($client, $connection) {
+
+        return function () use ($client, $connection) {
             $client->emit('connect.end', array($connection));
         };
     }
@@ -183,4 +187,4 @@ class Client extends EventEmitter
     {
         return $this->writeStream;
     }
-} 
+}

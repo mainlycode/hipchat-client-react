@@ -15,24 +15,24 @@ class Client extends BaseClient
 
         $loop = $this->loop;
 
-        $this->on('connect.after', function($connection) use ($write, $loop) {
+        $this->on('connect.after', function ($connection) use ($write, $loop) {
             $write->xmppStartStream($connection->getHost());
 
-            $loop->addPeriodicTimer(60, function() use ($write) {
+            $loop->addPeriodicTimer(60, function () use ($write) {
                 $write->keepAlive();
             });
         });
 
-        $read->on('xmpp.tls.required', function($data) use ($write) {
+        $read->on('xmpp.tls.required', function ($data) use ($write) {
             $write->xmppStartTls();
         });
 
-        $read->on('xmpp.tls.proceed', function($data) use ($stream, $write, $connection) {
+        $read->on('xmpp.tls.proceed', function ($data) use ($stream, $write, $connection) {
             $this->encryptSocket($stream->stream);
             $write->xmppStartStream($connection->getHost());
         });
 
-        $read->on('xmpp.features', function($data) use ($connection, $write) {
+        $read->on('xmpp.features', function ($data) use ($connection, $write) {
             $write->xmppAuthenticateNonSasl(
                 $connection->getJabberId()->getLocalPart(),
                 $connection->getPassword(),
@@ -40,17 +40,17 @@ class Client extends BaseClient
             );
         });
 
-        $read->on('xmpp.authentication.success', function($data) use ($connection, $write) {
+        $read->on('xmpp.authentication.success', function ($data) use ($connection, $write) {
             //$write->xmppBind(); // @todo not required on HipChat?
             $write->xmppEstablishSession($connection->getHost());
         });
 
-        $read->on('xmpp.stream.end', function($data) use ($loop) {
+        $read->on('xmpp.stream.end', function ($data) use ($loop) {
             $loop->stop();
         });
 
-        $this->on('connect.end', function($connection) use ($loop) {
+        $this->on('connect.end', function ($connection) use ($loop) {
             $loop->stop();
         });
     }
-} 
+}
