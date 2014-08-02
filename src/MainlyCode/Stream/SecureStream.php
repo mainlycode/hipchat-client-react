@@ -21,4 +21,4 @@ class SecureStream extends Stream
             $this->emit('data', array($data, $this));
         }
     }
-} 
+}

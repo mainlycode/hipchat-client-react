@@ -100,7 +100,7 @@ class WriteStream extends ReadableStream
     }
 
     /**
-     * @param string $message
+     * @param  string $message
      * @return string
      */
     public function xmlEncode($message)

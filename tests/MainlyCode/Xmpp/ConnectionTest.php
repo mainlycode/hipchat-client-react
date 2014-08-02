@@ -35,4 +35,4 @@ class ConnectionTest extends TestCase
 
         $this->assertEquals('tcp://chat.hipchat.com:5222', $connection->getRemoteSocket());
     }
-} 
+}
