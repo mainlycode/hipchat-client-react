@@ -66,6 +66,7 @@ class Client extends EventEmitter
         $write->pipe($stream)->pipe($read);
 
         $read->on('data', $this->getReadCallback($write, $connection, 'xmpp.received'));
+        $read->on('xmpp.stanza.received', $this->getReadCallback($write, $connection, 'xmpp.stanza.received'));
         $read->on('xmpp.session.established', $this->getReadCallback($write, $connection, 'xmpp.session.established'));
         $read->on('xmpp.message.received', $this->getReadCallback($write, $connection, 'xmpp.message.received'));
         $write->on('data', $this->getWriteCallback($connection));
