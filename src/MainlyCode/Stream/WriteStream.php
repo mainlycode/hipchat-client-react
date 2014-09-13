@@ -45,7 +45,7 @@ class WriteStream extends ReadableStream
      */
     public function xmppAuthenticateNonSasl($username, $password, $resource)
     {
-        $this->send(sprintf('<iq type="set" id="1001"><query xmlns="jabber:iq:auth"><username>%s</username><password>%s</password><resource>%s</resource></query></iq>', $username, $password, $resource));
+        $this->send(sprintf('<iq type="set" id="1001"><query xmlns="jabber:iq:auth"><username>%s</username><password>%s</password><resource>%s</resource></query></iq>', $this->xmlEncode($username), $this->xmlEncode($password), $this->xmlEncode($resource)));
     }
 
     /**
