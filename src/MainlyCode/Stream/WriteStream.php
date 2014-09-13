@@ -100,6 +100,24 @@ class WriteStream extends ReadableStream
     }
 
     /**
+     * @param JabberId $jabberId
+     * @param string   $host
+     */
+    public function xmppDiscoverRooms(JabberId $jabberId, $host)
+    {
+        $this->send(sprintf('<iq type="get" from="%s" id="discover_rooms_1" to="%s"><query xmlns="http://jabber.org/protocol/disco#items" /></iq>', $jabberId->getId(), $host));
+    }
+
+    /**
+     * @param JabberId $jabberId
+     * @param JabberId $roomId
+     */
+    public function xmppRoomInfo(JabberId $jabberId, JabberId $roomId)
+    {
+        $this->send(sprintf('<iq type="get" from="%s" id="discover_rooms_1" to="%s"><query xmlns="http://jabber.org/protocol/disco#info" /></iq>', $jabberId->getId(), $roomId->getId()));
+    }
+
+    /**
      * @param string $message
      * @return string
      */
