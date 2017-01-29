@@ -78,12 +78,19 @@ class WriteStream extends ReadableStream
      * @param JabberId $room
      * @param JabberId $from
      * @param string   $message
+     * @param string   $type
      */
-    public function xmppMessage(JabberId $room, JabberId $from, $message)
+    public function xmppMessage(JabberId $room, JabberId $from, $message, $type = 'groupchat')
     {
         $message = $this->xmlEncode($message);
 
-        $this->send(sprintf('<message to="%s" from="%s" type="groupchat" xml:lang="en"><body>%s</body></message>', $room->getId(), $from->getId(), $message));
+        $this->send(sprintf(
+            '<message to="%s" from="%s" type="%s" xml:lang="en"><body>%s</body></message>',
+            $room->getId(),
+            $from->getId(),
+            $type,
+            $message
+        ));
     }
 
     /**
