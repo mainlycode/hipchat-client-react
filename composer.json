@@ -10,6 +10,9 @@
     "autoload": {
         "psr-0": { "MainlyCode": "src/" }
     },
+    "autoload-dev": {
+        "psr-0": { "MainlyCode": "tests/" }
+    },
     "minimum-stability": "dev",
     "require": {
         "evenement/evenement": "~1.0",
